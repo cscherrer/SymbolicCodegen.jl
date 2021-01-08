@@ -3,6 +3,9 @@ uuid = "fc9b0551-4f1b-42e1-8440-e8a535f5a551"
 authors = ["Chad Scherrer <chad.scherrer@gmail.com> and contributors"]
 version = "0.1.0"
 
+[deps]
+SymbolicUtils = "d1185830-fcd6-423d-90d6-eec64667417b"
+
 [compat]
 julia = "1.5"
 
