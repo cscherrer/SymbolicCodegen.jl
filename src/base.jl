@@ -3,8 +3,6 @@ codegen(s::T) where T <: Number = s
 codegen(s::Symbol) = s
 codegen(ex::Expr) = ex
 
-
-
 function codegen(s::Term{T}) where {T}
     args = codegen.(s.arguments)
     codegen(T, s.f, args...)
@@ -15,10 +13,18 @@ function codegen(s::Sym{T}) where {T}
 end
 
 function codegen(::Type{T}, f::Function, args...) where {T}
-    ts = codegen.(args)
-    @q begin
-        $f($(ts...))
+    fsym = gensym(f.name)
+    argsyms = gensym.(Symbol.(:arg_, 1:length(args)))
+    ex = @q begin end
+
+    for (arg, argsym) in zip(args, argsyms)
+        t = codegen(arg)
+        push!(ex.args, :($argsym = $t))
     end
+        
+    push!(ex.args, :($fsym = $f($(argsyms...))
+        
+    ex
 end
 
 

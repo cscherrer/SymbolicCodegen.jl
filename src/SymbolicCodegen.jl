@@ -2,7 +2,6 @@ module SymbolicCodegen
 
 using SymbolicUtils
 using SymbolicUtils: Sym, Term, Symbolic
-using DataStructures
 const RW = SymbolicUtils.Rewriters
 const MaybeSym{T} = Union{T, Symbolic{T}}
 

@@ -1,3 +1,13 @@
+using DataStructures: OrderedDict
+
+function cse(s <: Symbolic)
+    vars = atoms(s)
+    dict = OrderedDict()
+    r = @rule ~x::(x -> x isa Term) => csestep(~x, vars, dict) 
+    final = Postwalk(RW.Chain([r]))(s)
+    [[var=>ex for (ex, var) in pairs(dict)]...]
+end
+
 
 function csestep(x, vars, dict)
     # Avoid breaking local variables out of their scope
@@ -8,12 +18,4 @@ function csestep(x, vars, dict)
     end
 
     return dict[x]
-end
-
-function cse(s <: Symbolic)
-    vars = atoms(s)
-    dict = OrderedDict()
-    r = @rule ~x::(x -> x isa Term) => csestep(~x, vars, dict) 
-    final = Postwalk(RW.Chain([r]))(s)
-    [[var=>ex for (ex, var) in pairs(dict)]...] #, final]
 end
