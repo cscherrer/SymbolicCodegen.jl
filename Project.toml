@@ -9,6 +9,7 @@ MacroTools = "1914dd2f-81c6-5fcd-8719-6d5c9610ff09"
 SymbolicUtils = "d1185830-fcd6-423d-90d6-eec64667417b"
 
 [compat]
+MacroTools = "0.5"
 julia = "1.5"
 
 [extras]
