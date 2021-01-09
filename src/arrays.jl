@@ -1,8 +1,8 @@
 
-codegen(a::AbstractArray) = a
+_codegen(a::AbstractArray) = a
 
-function codegen(::Type{T}, f::Function, args::Array{Sym}) where {T}
-    ts = codegen.(args)
+function _codegen(::Type{T}, f::Function, args::Array{Sym}) where {T}
+    ts = _codegen.(args)
     @q begin
         $f($(ts...))
     end

@@ -10,13 +10,16 @@ sym(T::Type) = :(SymbolicCodegen.Sym{$T})
 
 sym(T::Type, s::Symbol) = :($(sym(T))($(QuoteNode(s))))
 
+export atoms
 
+function atoms(t::Symbolic)
+    f = operation(t)
+    args = arguments(t)
 
-function atoms(t::Term)
-    if hasproperty(t.f, :name) && t.f.name == :Sum
-        return setdiff(atoms(t.arguments[1]), [t.arguments[2]])
+    if hasproperty(f, :name) && f.name == :Sum
+        return setdiff(atoms(args[1]), [args[2]])
     else
-        return union(atoms(t.f), union(atoms.(t.arguments)...))
+        return union(atoms(f), union(atoms.(args)...))
     end
 end 
 atoms(s::Sym) = Set{Sym}([s])

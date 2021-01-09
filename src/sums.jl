@@ -10,7 +10,7 @@ end
 
 
 
-function codegen(::Type{T},s::SymbolicUtils.Sym{SymbolicUtils.FnType{Tuple{E,Int64,Int64,Int64},X}}, args...) where {T, E<: Number, X <: Number}
+function _codegen(::Type{T},s::SymbolicUtils.Sym{SymbolicUtils.FnType{Tuple{E,Int64,Int64,Int64},X}}, args...) where {T, E<: Number, X <: Number}
     @assert s.name == :Sum
 
     @gensym sum
@@ -18,7 +18,7 @@ function codegen(::Type{T},s::SymbolicUtils.Sym{SymbolicUtils.FnType{Tuple{E,Int
     @gensym lo
     @gensym hi
         
-    (summand, ix, ixlo, ixhi) = codegen.(args)
+    (summand, ix, ixlo, ixhi) = _codegen.(args)
 
 
     ex = @q begin

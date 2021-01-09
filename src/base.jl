@@ -1,55 +1,32 @@
-codegen(s::T) where T <: Number = s
+_codegen(s::T) where T <: Number = s
 
-codegen(s::Symbol) = s
-codegen(ex::Expr) = ex
+_codegen(s::Symbol) = s
+_codegen(ex::Expr) = ex
 
-function codegen(s::Term{T}) where {T}
-    args = codegen.(s.arguments)
-    codegen(T, s.f, args...)
+function _codegen(s::Symbolic{T}) where {T}
+    @show s
+    f = operation(s)
+    args = _codegen.(arguments(s))
+    _codegen(T, f, args...)
 end
 
-function codegen(s::Sym{T}) where {T}
+function _codegen(s::Sym{T}) where {T}
     s.name
 end
 
-function codegen(::Type{T}, f::Function, args...) where {T}
-    fsym = gensym(f.name)
+function _codegen(::Type{T}, f::Function, args...) where {T}
+    @show f
+    @show args
+    fsym = gensym(Symbol(f))
     argsyms = gensym.(Symbol.(:arg_, 1:length(args)))
     ex = @q begin end
 
     for (arg, argsym) in zip(args, argsyms)
-        t = codegen(arg)
+        t = _codegen(arg)
         push!(ex.args, :($argsym = $t))
     end
         
-    push!(ex.args, :($fsym = $f($(argsyms...))
+    push!(ex.args, :($fsym = $f($(argsyms...))))
         
     ex
-end
-
-
-function codegen(::Type{T},::typeof(*), args...) where {T <: Number}
-    @gensym mul
-    ex = @q begin
-        $mul = 1.0
-    end
-    for arg in args
-        t = codegen(arg)
-        push!(ex.args, :($mul *= $t))
-    end
-    push!(ex.args, mul)
-    return ex
-end
-
-function codegen(::Type{T},::typeof(+), args...) where {T <: Number}
-    @gensym add
-    ex = @q begin
-        $add = 0.0
-    end
-    for arg in args
-        t = codegen(arg)
-        push!(ex.args, :($add += $t))
-    end
-    push!(ex.args, add)
-    return ex
 end
