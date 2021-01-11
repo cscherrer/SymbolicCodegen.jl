@@ -1,4 +1,4 @@
-using SymbolicUtils: similarterm
+using SymbolicUtils: similarterm, operation, arguments
 using DataStructures: OrderedDict
 export cse
 
@@ -17,7 +17,7 @@ csestep(s, vars, dict) = s
 
 function csestep(s::Symbolic, vars, dict)
     # Avoid breaking local variables out of their scope
-    isempty(setdiff(atoms(s), vars)) || return x
+    isempty(setdiff(atoms(s), vars)) || return s
 
     f = operation(s)
     args = [csestep(arg, vars, dict) for arg in arguments(s)]
