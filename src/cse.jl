@@ -2,12 +2,6 @@ using SymbolicUtils: similarterm
 using DataStructures: OrderedDict
 export cse
 
-# export notatomic
-
-# notatomic(::Symbolic) = true
-# notatomic(::Sym) = false
-# notatomic(x) = false
-
 function cse(s::Symbolic)
     vars = atoms(s)
     dict = OrderedDict()
@@ -36,5 +30,3 @@ function csestep(s::Symbolic, vars, dict)
     
     return dict[t]
 end
-
-# Base.:*(a::Int64, b::Symbol) = @show a,b
