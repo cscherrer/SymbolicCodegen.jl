@@ -1,3 +1,4 @@
+using SymbolicUtils: similarterm
 using DataStructures: OrderedDict
 export cse
 
@@ -10,8 +11,9 @@ export cse
 function cse(s::Symbolic)
     vars = atoms(s)
     dict = OrderedDict()
-    r = @rule ~x => csestep(~x, vars, dict) 
-    final = RW.Postwalk(RW.PassThrough(r))(s)
+    csestep(s, vars, dict)
+    # r = @rule ~x => csestep(~x, vars, dict) 
+    # final = RW.Postwalk(RW.PassThrough(r))(s)
     [[var=>ex for (ex, var) in pairs(dict)]...]
 end
 
@@ -21,16 +23,20 @@ csestep(s::Sym, vars, dict) = s
 
 csestep(s, vars, dict) = s
 
-function csestep(x::S, vars, dict) where {S <: Symbolic}
-    @show x
+function csestep(s::Symbolic, vars, dict)
     # Avoid breaking local variables out of their scope
-    isempty(setdiff(atoms(x), vars)) || return x
+    isempty(setdiff(atoms(s), vars)) || return x
 
-    if !haskey(dict, x) 
-        dict[x] = Sym{symtype(x)}(gensym())
+    f = operation(s)
+    args = [csestep(arg, vars, dict) for arg in arguments(s)]
+
+    t = similarterm(s, f, args)
+
+    if !haskey(dict, t) 
+        dict[t] = Sym{symtype(t)}(gensym())
     end
-
-    return dict[x]
+    
+    return dict[t]
 end
 
 # Base.:*(a::Int64, b::Symbol) = @show a,b

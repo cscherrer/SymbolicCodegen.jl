@@ -30,14 +30,14 @@ function codegen(s::Symbolic{T}) where {T}
 end
 
 
-RULES = [
-    @acrule (~a + ~b)*(~c) => (~a) * (~c) + (~b) * (~c)
-]
+# RULES = [
+#     @acrule (~a + ~b)*(~c) => (~a) * (~c) + (~b) * (~c)
+# ]
 
-export rewrite
+# export rewrite
 
-function rewrite(s)
-    simplify(s; polynorm=true) |> RW.Fixpoint(RW.Prewalk(RW.Chain(RULES))) |> simplify
-end
+# function rewrite(s)
+#     simplify(s; polynorm=true) |> RW.Fixpoint(RW.Prewalk(RW.Chain(RULES))) |> simplify
+# end
 
 end

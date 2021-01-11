@@ -4,7 +4,6 @@ _codegen(s::Symbol) = s
 _codegen(ex::Expr) = ex
 
 function _codegen(s::Symbolic{T}) where {T}
-    @show s
     f = operation(s)
     args = _codegen.(arguments(s))
     _codegen(T, f, args...)
@@ -15,8 +14,6 @@ function _codegen(s::Sym{T}) where {T}
 end
 
 function _codegen(::Type{T}, f::Function, args...) where {T}
-    @show f
-    @show args
     fsym = gensym(Symbol(f))
     argsyms = gensym.(Symbol.(:arg_, 1:length(args)))
     ex = @q begin end
