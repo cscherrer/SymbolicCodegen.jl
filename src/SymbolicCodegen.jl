@@ -30,9 +30,9 @@ function codegen(s::Symbolic{T}) where {T}
 end
 
 
-# RULES = [
-#     @acrule (~a + ~b)*(~c) => (~a) * (~c) + (~b) * (~c)
-# ]
+ACRULES = [
+    @acrule (~a + ~b)*(~c) => (~a) * (~c) + (~b) * (~c)
+]
 
 # export rewrite
 

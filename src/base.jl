@@ -15,15 +15,21 @@ end
 
 function _codegen(::Type{T}, f::Function, args...) where {T}
     fsym = gensym(Symbol(f))
-    argsyms = gensym.(Symbol.(:arg_, 1:length(args)))
+    argsyms = Vector{Any}(gensym.(Symbol.(:arg_, 1:length(args))))
     ex = @q begin end
 
-    for (arg, argsym) in zip(args, argsyms)
+    for (j, (arg, argsym)) in enumerate(zip(args, argsyms))
         t = _codegen(arg)
-        push!(ex.args, :($argsym = $t))
+
+        # if t isa Expr
+        #     push!(ex.args, :($argsym = $t))
+        # else
+            argsyms[j] = t
+        # end
+        
     end
         
-    push!(ex.args, :($fsym = $f($(argsyms...))))
-        
+    # push!(ex.args, :($fsym = $f($(argsyms...))))
+    push!(ex.args, :($f($(argsyms...))))
     ex
 end
