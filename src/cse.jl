@@ -14,10 +14,8 @@ function cse(s::Symbolic)
     csestep(s, vars, dict)
     # r = @rule ~x => csestep(~x, vars, dict) 
     # final = RW.Postwalk(RW.PassThrough(r))(s)
-    [[var=>ex for (ex, var) in pairs(dict)]...]
+    [[var.name => ex for (ex, var) in pairs(dict)]...]
 end
-
-export csestep
 
 csestep(s::Sym, vars, dict) = s
 
