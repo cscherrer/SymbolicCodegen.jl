@@ -7,11 +7,14 @@ const MaybeSym{T} = Union{T, Symbolic{T}}
 using MacroTools
 using MacroTools: @q
 
+RuntimeGeneratedFunctions.init(@__MODULE__)
+
 include("utils.jl")
 include("base.jl")
 include("sums.jl")
 include("arrays.jl")
 include("cse.jl")
+include("foldconstants.jl")
 
 export codegen
 
