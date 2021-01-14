@@ -1,5 +1,3 @@
-using RuntimeGeneratedFunctions
-
 """
     foldconstants(s, dict)
 

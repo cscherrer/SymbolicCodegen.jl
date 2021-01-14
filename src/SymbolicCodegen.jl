@@ -6,6 +6,7 @@ const RW = SymbolicUtils.Rewriters
 const MaybeSym{T} = Union{T, Symbolic{T}}
 using MacroTools
 using MacroTools: @q
+using RuntimeGeneratedFunctions
 
 RuntimeGeneratedFunctions.init(@__MODULE__)
 
