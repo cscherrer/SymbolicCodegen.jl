@@ -25,12 +25,6 @@ toconst(s::Number, dict) = s
 
 toconst(s::Sym, dict) = dict[s.name]
 
-function toconst(s::Term, dict)
-    f = operation(s)
-    args = (toconst(arg, dict) for arg in arguments(s))
-    f(args...)
-end
-
 function toconst(s::Symbolic, dict)
     # First, here's the main body of the code
     f_expr = @q begin $(codegen(s)) end
