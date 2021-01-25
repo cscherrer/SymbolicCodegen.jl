@@ -22,6 +22,7 @@ function atoms(t::Symbolic)
         return union(atoms(f), union(atoms.(args)...))
     end
 end 
+
 atoms(s::Sym) = Set{Sym}([s])
 
 atoms(x) = Set{Sym}()
