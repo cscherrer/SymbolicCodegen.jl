@@ -13,6 +13,7 @@ SymbolicUtils = "d1185830-fcd6-423d-90d6-eec64667417b"
 [compat]
 DataStructures = "0.18"
 MacroTools = "0.5"
+MLStyle = "0.4"
 RuntimeGeneratedFunctions = "0.5"
 SymbolicUtils = "0.7"
 julia = "1.5"
