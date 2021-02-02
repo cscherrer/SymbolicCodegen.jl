@@ -8,6 +8,6 @@ function _codegen(::Type{T}, f::Function, args::Array{Sym}) where {T}
     end
 end
 
-Base.getindex(a::Sym{A}, inds...) where {T, A <: AbstractArray{T}} = term(getindex, a, inds...)
+Base.getindex(a::Sym{A}, inds...) where {T, A <: AbstractArray{T}} = term(getindex, a, inds...; type=T)
 
 SymbolicUtils.promote_symtype(::typeof(getindex), ::Type{A}, ::Type{<:Integer}...) where {T, A <: AbstractArray{T}} = T
