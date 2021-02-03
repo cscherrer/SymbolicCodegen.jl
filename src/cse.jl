@@ -2,6 +2,8 @@ using SymbolicUtils: similarterm, operation, arguments
 using DataStructures: OrderedDict
 export cse
 
+# Adaptation of this code:
+# https://github.com/JuliaSymbolics/SymbolicUtils.jl/issues/121
 function cse(s::Symbolic)
     vars = atoms(s)
     dict = OrderedDict()
