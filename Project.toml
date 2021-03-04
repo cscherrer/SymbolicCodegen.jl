@@ -15,7 +15,7 @@ DataStructures = "0.18"
 MLStyle = "0.4"
 MacroTools = "0.5"
 RuntimeGeneratedFunctions = "0.5"
-SymbolicUtils = "0.7, 0.8"
+SymbolicUtils = "0.7, 0.8, 0.9"
 julia = "1.5"
 
 [extras]
