@@ -38,6 +38,10 @@ function callify(expr; call=:call)
     foldast(leaf, branch)(expr)
 end
 
+macro call(expr)
+    callify(expr)
+end
+
 
 # julia> callify(:(f(g(x,y))))
 # :(call(f, call(g, x, y)))
@@ -54,5 +58,15 @@ end
 function call(f, args...; kwargs...)
     hasmethod(f, typeof.(args), keys(kwargs)) && return f(args...; kwargs...)
 
-    # else build a term
+    term(f, args...)
 end
+
+# f(x) = x+1
+
+# @call f(2)
+
+# using SymbolicUtils
+
+# @syms x::Vector{Float64} i::Int
+
+# @call getindex(x,i)
