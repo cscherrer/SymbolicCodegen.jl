@@ -1,7 +1,7 @@
 name = "SymbolicCodegen"
 uuid = "fc9b0551-4f1b-42e1-8440-e8a535f5a551"
 authors = ["Chad Scherrer <chad.scherrer@gmail.com> and contributors"]
-version = "0.2.1"
+version = "0.2.2"
 
 [deps]
 DataStructures = "864edb3b-99cc-5e75-8d2d-829cb0a9cfe8"
@@ -15,7 +15,7 @@ DataStructures = "0.18"
 MLStyle = "0.4"
 MacroTools = "0.5"
 RuntimeGeneratedFunctions = "0.5"
-SymbolicUtils = "0.7, 0.8, 0.9"
+SymbolicUtils = "0.7, 0.8, 0.9, 0.10, 0.11"
 julia = "1.5"
 
 [extras]
